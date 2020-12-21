@@ -18,7 +18,7 @@ class CreateExercisesTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->unsignedInteger('training_id');
-            $table->foreign('training_id')->references('id')->on('trainings')->unsigned();
+            $table->foreign('training_id')->references('id')->on('trainings')->unsigned()->onDelete('cascade');
         });
     }
 

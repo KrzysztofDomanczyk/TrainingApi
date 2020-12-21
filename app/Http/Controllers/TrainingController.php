@@ -119,7 +119,7 @@ class TrainingController extends Controller
     {
         $training = Training::findOrFail($id);
     
-        if ($training->users->isEmpty()) {
+        if (Auth::user()->can('delete', $training)) {
             $training->delete();
             $response = [
                 'status' => "ok",

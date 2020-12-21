@@ -53,7 +53,7 @@ class TrainingPolicy
      */
     public function update(User $user, Training $training)
     {
-        //
+      
     }
 
     /**
@@ -65,7 +65,7 @@ class TrainingPolicy
      */
     public function delete(User $user, Training $training)
     {
-        //
+        return $training->users->isEmpty();
     }
 
     /**
