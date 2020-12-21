@@ -20,9 +20,6 @@ class TrainingController extends Controller
      */
     public function index()
     {
-
-        dd(factory(Training::class)->create());
-
         $trainings = Training::with(['users'])->get();
 
         return response([
@@ -73,16 +70,17 @@ class TrainingController extends Controller
     public function show($id)
     {
         $training = Training::find($id);
+        
         if(Auth::user()->can('view', $training)){
             $response = [
                     'status' => "ok",
                     'response' => $training
             ];
         } else {
-            $response = [
-                'status' => 'error',
-                'message' => "You have no access to this resource"
-            ];
+            return response ([
+                'status' => "error",
+                'response' => 'Exist users who boughts this training'
+            ], 404);
         }
 
         return response($response);
@@ -119,11 +117,8 @@ class TrainingController extends Controller
      */
     public function destroy($id)
     {
+        $training = Training::findOrFail($id);
     
-            $training = Training::findOrFail($id);
-    
-      
-       
         if ($training->users->isEmpty()) {
             $training->delete();
             $response = [
